@@ -35,18 +35,20 @@ void connection_pool::init(string url, string User, string PassWord, string DBNa
 	for (int i = 0; i < MaxConn; i++)
 	{
 		MYSQL *con = NULL;
+		MYSQL mysql;
 		con = mysql_init(con);
 
 		if (con == NULL)
 		{
-			LOG_ERROR("MySQL Error");
+			LOG_ERROR("MySQL Error 1");
 			exit(1);
 		}
 		con = mysql_real_connect(con, url.c_str(), User.c_str(), PassWord.c_str(), DBName.c_str(), Port, NULL, 0);
 
 		if (con == NULL)
 		{
-			LOG_ERROR("MySQL Error");
+			auto a=mysql_errno(&mysql);
+			LOG_ERROR("MySQL Error 2");
 			exit(1);
 		}
 		connList.push_back(con);
