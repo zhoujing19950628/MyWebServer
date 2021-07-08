@@ -37,17 +37,17 @@ void connection_pool::init(string url, string User, string PassWord, string DBNa
 		MYSQL *con = NULL;
 		MYSQL mysql;
 		con = mysql_init(con);
-
+		mysql_init(&mysql);
 		if (con == NULL)
 		{
 			LOG_ERROR("MySQL Error 1");
 			exit(1);
 		}
-		con = mysql_real_connect(con, url.c_str(), User.c_str(), PassWord.c_str(), DBName.c_str(), Port, NULL, 0);
-
+		mysql_real_connect(con, url.c_str(), User.c_str(), PassWord.c_str(), DBName.c_str(), Port, NULL, 0);
+		string a=mysql_error(con);
 		if (con == NULL)
 		{
-			auto a=mysql_errno(&mysql);
+			
 			LOG_ERROR("MySQL Error 2");
 			exit(1);
 		}
